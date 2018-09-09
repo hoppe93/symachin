@@ -1,10 +1,10 @@
-# symachin -- the Symbol Manipulator for speCHial Individuals
-symachin is a small symbol manipulator, designed to help with accounting during
+# symachin — the Symbol Manipulator for speCHial Individuals
+`symachin` is a small symbol manipulator, designed to help with accounting during
 long calculations. While the language is rather limited (only supporting addition,
 subtraction and multiplication in expressions) it can greatly help in tedious
 calculations which mostly include substitutions of relations on many terms.
 
-Note that symachin was implemented in a short amount of time as a simple helper
+Note that `symachin` was implemented in a short amount of time as a simple helper
 tool (initially just as a C++ library) for a particular problem, and thus uses
 very simple internal logic and has not been extensively optimized.
 
@@ -30,21 +30,19 @@ Table of Contents
       * [Equality](#equality)
       * [Sourcing scripts](#sourcing-scripts)
    * [Commands](#commands)
-      * [assign](#:----assign-expression-to-label)
-      * [apply](#apply----apply-a-rule-to-an-expression)
-      * [assert](#assert----assert-that-two-expressions-are-equal)
-      * [define](#define----define-a-replacement-rule)
-      * [group](#group----group-expression-by-factor)
-      * [include](#include----include-script)
-      * [print](#print-----print-a-series-of-terms)
-      * [printn](#printn-----print-the-number-of-terms-in-an-expression)
-      * [replace](#replace-----replace-term-in-expression)
+      * [assign](#--assign-expression-to-label)
+      * [apply](#apply--apply-a-rule-to-an-expression)
+      * [assert](#assert--assert-that-two-expressions-are-equal)
+      * [define](#define--define-a-replacement-rule)
+      * [group](#group--group-expression-by-factor)
+      * [include](#include--include-script)
+      * [print](#print--print-a-series-of-terms)
+      * [printn](#printn--print-the-number-of-terms-in-an-expression)
+      * [replace](#replace--replace-term-in-expression)
 <!--te-->
 
 Compiling and running
 =====================
-This section describes what you need in order to compile and run `symachin`,
-as well as how you compile and run it.
 
 Preliminaries
 -------------
@@ -72,39 +70,38 @@ a `symachin` script, pass it as an argument to the `isymachin` executable.
 
 Basic concepts
 ==============
-In this section we describe the basic concepts of symachin.
 
 Expressions and rules
 ---------------------
-The two fundamental objects operated on/with in symachin are *expressions*
+The two fundamental objects operated on/with in `symachin` are *expressions*
 and *rules*. **Expressions** are basically the algebraic expressions that are
-processed by symachin, i.e. they consists of symbols that are added, subtracted
-and multiplied together. Formally, an expression in symachin is a list of
+processed by `symachin`, i.e. they consists of symbols that are added, subtracted
+and multiplied together. Formally, an expression in `symachin` is a list of
 *terms*, and each term in turn consists of a list of *factors*. Factors are the
-smallest units symachin works with and has two properties assigned to it:
+smallest units `symachin` works with and has two properties assigned to it:
 a *sign* and a *name*. The sign is either positive or negative, and determines
 how the factor behaves during addition and subtraction. The name is used to
 identify the factor, and any two factors with the same name are considered
 equal (in absolute value). The name may consist of any characters that doesn't
-hold special meaning to symachin.
+hold special meaning to `symachin`.
 
-**Rules**, or more complete, ***replacement*** **rules**, are tell symachin how
-to replace certain factors in a given expression. When applied, symachin will
+**Rules**, or more complete, ***replacement*** **rules**, are tell `symachin` how
+to replace certain factors in a given expression. When applied, `symachin` will
 go through the given expression and replace all occurences of a list of given
 factors by the expressions defined in the rule. Thus rules are able to emulate
 the behaviour of scalar products, cross products, or other more exotic
 operators (such as derivatives, integrals and beyond) when acting on
 expressions, while allowing the user to define symbolic relations.
 
-symachin keeps one list of expressions and one list of rules during execution.
+`symachin` keeps one list of expressions and one list of rules during execution.
 Both are labeled in the same way, but a label is either associated with an
 expression or a replacement rule. While the language syntax would not prevent
-an expression and a rule to have the same label, symachin enforces this syntax
+an expression and a rule to have the same label, `symachin` enforces this syntax
 rule to avoid confusion.
 
 Comments
 --------
-There are two types of comments in symachin. Line comments are started by `#`
+There are two types of comments in `symachin`. Line comments are started by `#`
 and ended by a newline character. Multiline comments are also allowed and have
 the same syntax as in the C family of languages. They are started with `/*` and
 ended by `*/`.
@@ -177,7 +174,7 @@ after the `include`.
 
 Commands
 ========
-The commands of symachin are best illustrated with the following example:
+The commands of `symachin` are best illustrated with the following example:
 ```
 # Other symachin scripts can be included
 include "otherfile.sm"
@@ -206,28 +203,28 @@ print $3.b;
 print $3.c;
 ```
 
-: -- Assign expression to label
+: — Assign expression to label
 -------------------------------
 Syntax: `[label] : <expression>;`
 
 The colon operator `:` assigns an expression to a label and allows you to later
 access the expression be referencing the label.
 
-apply -- Apply a rule to an expression
+apply — Apply a rule to an expression
 --------------------------------------
 Syntax: `[label] apply <rule> to <expression>;`
 
 Replaces factors in the expression according to the given rule. The result is
 assigned to the label at the start of the line.
 
-assert -- Assert that two expressions are equal
+assert — Assert that two expressions are equal
 -----------------------------------------------
 Syntax: `assert <expr> = <expr>;`
 
 Asserts that two expressions are equal. If the assertion fails, the interpreter
 throws an error and exits.
 
-define -- Define a replacement rule
+define — Define a replacement rule
 -----------------------------------
 Syntax: `[label] define <factor> -> <expression>; <factor> -> <expression>; ... end`
 
@@ -236,7 +233,7 @@ expression. The rule is assigned to the label at the start of the line and can
 be accessed by referencing it later. Each rule can contain several independent
 replacement statements of the form `factor -> expression;`.
 
-group -- Group expression by factor
+group — Group expression by factor
 -----------------------------------
 Syntax: `[opt. label] group <expression> by [label] <factor>; [label] <factor>; ... [label] other; end`
 
@@ -268,20 +265,20 @@ bb + bbb
 c
 ```
 
-include -- Include script
+include — Include script
 -------------------------
 Syntax: `include <word>`
 
 Includes the given file in the present location of the file.
 
-print --- Print a series of terms
+print — Print a series of terms
 ---------------------------------
 Syntax: `print <term> <term> ...;`
 
 Prints the sequence of objects to `stdout` with spaces in between, as well as
 a final newline character.
 
-printn --- Print the number of terms in an expression
+printn — Print the number of terms in an expression
 -----------------------------------------------------
 Syntax: `printn <expr>;`
 
@@ -292,7 +289,7 @@ printn $1;
 ```
 would result in `3` being printed to the terminal.
 
-replace --- Replace term in expression
+replace — Replace term in expression
 --------------------------------------
 Syntax: `[label] replace <term> -> <expr> in <expr>;`
 
