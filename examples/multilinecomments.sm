@@ -1,0 +1,12 @@
+# vim: ft=symachin
+/* A simple test of multiline
+   comments */
+
+[1]: a + a;
+
+/**
+ * Let's see if this comment
+ * is successfully excluded.
+ **/
+
+print $1;

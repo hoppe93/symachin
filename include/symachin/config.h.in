@@ -1,0 +1,6 @@
+#ifndef _SYMACHIN_CONFIG_H
+#define _SYMACHIN_CONFIG_H
+
+#cmakedefine DEBUG
+
+#endif/*_SYMACHIN_CONFIG_H*/

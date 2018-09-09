@@ -1,0 +1,33 @@
+# vim: ft=symachin
+# A script for testing the cancellation capabilities of symachin
+
+[1]: a - a + b;
+[2]: (a + b)*(a + b) - a*a - b*b;
+[3]: (a+b)*(a+b);
+[4]: a + b;
+[5]: a - b;
+[6]: $4*$5;
+[7]: a + a + b - a;
+[8]: a - 2*a;
+[9]: $2 + $6 + 0-a*a + $4*$5*$8;
+
+/*
+print "a-a+b                 =" $1;
+print "(a+b)*(a+b)-a*a-b*b   =" $2;
+print "(a+b)*(a+b)           =" $3;
+print "(a+b)*(a-b)           =" $6;
+print "a+a+b-a               =" $7;
+print "a-2*a                 =" $8;
+print "2*a*b-b*b-a*a*a+a*b*b =" $9;
+*/
+
+assert $1 = b;
+assert $2 = 2*a*b;
+assert $3 = a*a + 2*a*b + b*b;
+assert $6 = a*a - b*b;
+assert $7 = a + b;
+assert $8 = 0-a;
+assert $9 = 2*a*b - b*b - a*a*a + a*b*b;
+
+print "All assertions succeeded.";
+

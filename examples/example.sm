@@ -1,0 +1,21 @@
+# vim: ft=symachin
+
+# Assign expression to label
+[1]: (a+b) * (c+d) + q;
+
+[some_operator] define      # Define rule
+    a -> e+f;
+    c -> q-m;
+end
+
+[2] apply $some_operator to $1;
+
+[3] group $2 by
+    [a] a;
+    [b] c;
+    [c] other;
+end
+
+print $3.a;
+print $3.b;
+print $3.c;

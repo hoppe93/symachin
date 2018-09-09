@@ -1,0 +1,4 @@
+build
+include/symachin/config.h
+.gdb_history
+gmon.out

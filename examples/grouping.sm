@@ -1,0 +1,39 @@
+# vim: ft=symachin
+#
+# Test if "group ... by ..." works
+
+[1]: a;
+[2]: a * (b+c) + b * (c+d) + e;
+[3]: a * (b+c) + a * c * (a + b) + a * (a + b);
+
+[A] group $1 by
+    [a] a;
+    [b] b;
+    [c] other;
+end
+
+[B] group $2 by
+    [a] a;
+    [b] b;
+    [c] other;
+end
+
+[C] group $3 by
+    [a] a*a;
+    [b] a;
+    [c] other;
+end
+
+print "1   =" $A.a;
+print "0   =" $A.b;
+print "0   =" $A.c;
+
+print ;
+print "b+c =" $B.a;
+print "c+d =" $B.b;
+print "e   =" $B.c;
+
+print ;
+print "c+1       =" $C.a;
+print "2*b+b*c+c =" $C.b;
+print "0         =" $C.c;

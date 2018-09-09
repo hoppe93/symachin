@@ -1,0 +1,14 @@
+# Test of symachin's numeric capabilities
+
+[1a]: 0-3*2*a;
+[1b]: 6*a;
+[2a]: a + b - c;
+[2b]: a + b - $2a;
+[3a]: 0-a1tGradB + a1tGradB*2;
+
+assert $1a = 0-$1b;
+assert $2b = c;
+assert $3a = a1tGradB;
+
+print "'numeric' tests passed.";
+

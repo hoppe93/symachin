@@ -1,0 +1,7 @@
+# Single replace
+
+[1]: a*(c+d);
+[2] replace a -> a+b in $1;
+
+print "(a+b)*(c+d) =" $2;
+

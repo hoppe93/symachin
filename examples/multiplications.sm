@@ -1,0 +1,8 @@
+# vim: ft=symachin
+
+[1a]: a + b + c;
+[2a]: $1a*bHat;
+[2b]: $1a*bHat;
+
+assert $2a = $2b;
+print "SUCCESS";
