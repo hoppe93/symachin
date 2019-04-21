@@ -132,6 +132,14 @@ void Parser::print() {
 }
 
 /**
+ * Print the expression in a slightly better formatted way.
+ */
+void Parser::printf(ExpressionPtr &ep) {
+    string s = ep->ToString(true);
+    cout << s << endl;
+}
+
+/**
  * Print the number of terms in the given expression.
  */
 void Parser::printn(ExpressionPtr &ep) {

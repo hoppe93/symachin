@@ -250,23 +250,25 @@ vectorExpressionPtr Expression::GroupBy(const vector<TermPtr> &exprs) const {
 
 /**
  * Convert this expression into a string.
+ *
+ * formatted: If true, print slightly better formatted text.
  */
-string Expression::ToString() {
+string Expression::ToString(bool formatted) {
     string s;
 
     if (terms->size() > 0) {
         TermPtr t = terms->at(0);
         if (t->GetSign() == SYMACHIN_SIGN_NEG)
             s = "-";
-        s += t->ToString();
+        s += t->ToString(formatted);
     }
 
     if (terms->size() > 1) {
         for (vector<TermPtr>::iterator it = terms->begin()+1; it != terms->end(); it++) {
             if ((*it)->GetSign() == SYMACHIN_SIGN_POS)
-                s += "  +  " + (*it)->ToString();
+                s += "  +  " + (*it)->ToString(formatted);
             else
-                s += "  -  " + (*it)->ToString();
+                s += "  -  " + (*it)->ToString(formatted);
         }
     }
 

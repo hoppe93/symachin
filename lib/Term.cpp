@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <map>
 #include <string>
 #include <vector>
 #include "symachin/Factor.h"
@@ -331,17 +332,57 @@ void Term::ReplaceFactors(vectorFactorPtr newfacts) {
 
 /**
  * Convert this term to a string.
+ *
+ * formatted: If true, return a slightly better formatted string.
  */
-string Term::ToString() const {
+string Term::ToString(bool formatted) const {
     string s;
 
-    if (factors->size() > 0)
-        s = factors->at(0)->ToString();
+    if (formatted) {
+        return ToStringFormatted();
+    } else {
+        if (factors->size() > 0)
+            s = factors->at(0)->ToString();
 
-    if (factors->size() > 1) {
-        for (vector<FactorPtr>::iterator it = factors->begin()+1; it != factors->end(); it++) {
-            s += " * " + (*it)->ToString();
+        if (factors->size() > 1) {
+            for (vector<FactorPtr>::iterator it = factors->begin()+1; it != factors->end(); it++) {
+                s += " * " + (*it)->ToString();
+            }
         }
+    }
+
+    return s;
+}
+
+string Term::ToStringFormatted() const {
+    string s;
+    bool nonTrivialNumericFactor = false;
+
+    // Count occurences of factors
+    map<string, unsigned int> occ;
+    string num;
+
+    for (vector<FactorPtr>::iterator it = factors->begin(); it != factors->end(); it++) {
+        if ((*it)->IsNumber()) {
+            num = (*it)->ToString();
+            nonTrivialNumericFactor = ((*it)->GetNumericValue() != 1);
+        } else if (occ.find((*it)->ToString()) != occ.end())
+            occ[(*it)->ToString()] += 1;
+        else
+            occ[(*it)->ToString()] = 1;
+    }
+
+    if (nonTrivialNumericFactor || occ.size() == 0)
+        s = num;
+
+    for (map<string, unsigned int>::iterator it = occ.begin(); it != occ.end(); it++) {
+        if (nonTrivialNumericFactor || it != occ.begin())
+            s += " * ";
+
+        s += it->first;
+
+        if (it->second != 1)
+            s += "^" + to_string(it->second);
     }
 
     return s;

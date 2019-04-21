@@ -56,7 +56,7 @@ namespace symachin {
             static vectorTermPtr Parse(const std::string&);
 
             vectorExpressionPtr GroupBy(const std::vector<TermPtr>&) const;
-            std::string ToString();
+            std::string ToString(bool formatted=false);
 
             long CountMaxUsage();
     };

@@ -207,6 +207,8 @@ token *Lexer::next() {
             tkn->type =token::OTHER;
         } else if (tkn->text == "print") {
             tkn->type = token::PRINT;
+        } else if (tkn->text == "printf") {
+            tkn->type = token::PRINTF;
         } else if (tkn->text == "printn") {
             tkn->type = token::PRINTN;
         } else if (tkn->text == "replace") {

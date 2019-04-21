@@ -44,7 +44,8 @@ namespace symachin {
             bool IsEqual(const Term&, bool numericEquality=true) const;
             bool IsEqual(const TermPtr t, bool numericEquality=true) const { return IsEqual(*t, numericEquality); }
 
-            std::string ToString() const;
+            std::string ToString(bool formatted) const;
+            std::string ToStringFormatted() const;
 
             bool operator==(const Term &t) const { return IsEqual(t); }
     };

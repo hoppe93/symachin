@@ -10,7 +10,7 @@ endif
 let b:current_syntax = "symachin"
 
 " Keywords
-syn keyword symachinKeyword apply assert by define end group in include other print printn replace to
+syn keyword symachinKeyword apply assert by define end group in include other print printf printn replace to
 " Operators
 syn match symachinOperator '->\|+\|-\|*\|=\|:\|;'
 

@@ -148,6 +148,14 @@ void Parser::Parse(vector<token*> *tokens) {
                     print();
                 } break;
 
+                // PRINTF <expr>
+                case token::PRINTF: {
+                    expect(token::EXPRESSION);
+                    ExpressionPtr ep(new Expression(gtkn()->text));
+
+                    this->printf(ep);
+                } break;
+
                 // PRINTN <expr>
                 case token::PRINTN: {
                     expect(token::EXPRESSION);

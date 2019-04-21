@@ -39,6 +39,7 @@ class Parser {
         //void group_by(symachin::ExpressionPtr&, std::vector<symachin::FactorPtr>&, std::vector<std::string>&, const std::string&);
         void group_by(symachin::ExpressionPtr&, std::vector<symachin::ExpressionPtr>&, std::vector<std::string>&, const std::string&);
         void print();
+        void printf(symachin::ExpressionPtr&);
         void printn(symachin::ExpressionPtr&);
         void replace_in(const std::string&, const std::string&, const std::string&, symachin::ExpressionPtr);
 

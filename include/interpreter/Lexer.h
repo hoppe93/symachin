@@ -40,6 +40,7 @@ typedef struct lex_token {
         INCLUDE,            // include
         OTHER,              // other
         PRINT,              // print
+        PRINTF,             // printf
         PRINTN,             // printn
         REPLACE,            // replace
         TO                  // to
@@ -87,6 +88,7 @@ typedef struct lex_token {
             case INCLUDE:        return "INCLUDE";
             case OTHER:          return "OTHER";
             case PRINT:          return "PRINT";
+            case PRINTF:         return "PRINTF";
             case PRINTN:         return "PRINTN";
             case REPLACE:        return "REPLACE";
             case TO:             return "TO";
