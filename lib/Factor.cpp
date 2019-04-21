@@ -111,9 +111,11 @@ void Factor::MultiplyNumeric(const Factor &f) {
     if (!this->isNumeric || !f.IsNumber())
         throw FactorException("Attempting to multiply two non-numeric factors together as numbers.");
 
-    unsigned int n = stoi(this->name) * stoi(f.GetName());
+    //unsigned int n = stoi(this->name) * stoi(f.GetName());
+    unsigned int n = this->numericValue * f.GetNumericValue();
     this->name = to_string(n);
     this->sgn = (this->GetSign()==f.GetSign() ? SYMACHIN_SIGN_POS:SYMACHIN_SIGN_NEG);
+    this->numericValue = n;
 }
 
 /**
