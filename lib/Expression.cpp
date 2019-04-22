@@ -3,6 +3,7 @@
  */
 
 #include <algorithm>
+#include <map>
 #include <string>
 #include <vector>
 #include "symachin/Expression.h"
@@ -273,6 +274,22 @@ string Expression::ToString(bool formatted) {
     }
 
     return s;
+}
+
+/**
+ * Evaluate this expression numerically with the given
+ * table of numeric substitutions.
+ * 
+ * subst: Table of numeric substitutions to make.
+ * other: Value to assign to tokens not found in table 'subst'.
+ */
+double Expression::Evaluate(const map<string, double>& subst, const double other) const {
+    double total = 0.0;
+
+    for (vector<TermPtr>::const_iterator it = terms->begin(); it != terms->end(); it++)
+        total += (*it)->Evaluate(subst, other);
+
+    return total;
 }
 
 /********************

@@ -34,9 +34,11 @@ Table of Contents
       * [apply](#apply--apply-a-rule-to-an-expression)
       * [assert](#assert--assert-that-two-expressions-are-equal)
       * [define](#define--define-a-replacement-rule)
+      * [eval](#eval--evaluate-expression-numerically)
       * [group](#group--group-expression-by-factor)
       * [include](#include--include-script)
       * [print](#print--print-a-series-of-terms)
+      * [printf](#printf--print-formatted-expression)
       * [printn](#printn--print-the-number-of-terms-in-an-expression)
       * [replace](#replace--replace-term-in-expression)
 <!--te-->
@@ -233,6 +235,51 @@ expression. The rule is assigned to the label at the start of the line and can
 be accessed by referencing it later. Each rule can contain several independent
 replacement statements of the form `factor -> expression;`.
 
+eval — Evaluate expression numerically
+--------------------------------------
+Syntax: `eval <expression> with <factor> = <value>; ... end` or
+`eval <expression> with <factor> = <value>; ... assert <value>;`
+
+Evaluates the given expression numerically by replacing all symbolic factors
+with corresponding numeric values. The numeric values are given after the `with`
+keyword in the format `<factor> = <value>;`. Any symbolic factor not explicitly
+listed is automatically assigned the value `1`. To change this default value,
+assign the desired value to `other`, i.e. `other = 2.0;`.
+
+It is possible to let `<value>` be a factor which has previously been assigned
+a numeric value in the same list.
+
+If the command is ended with `assert <value>;` instead of `end`, `symachin` will
+ensure that the given expression evaluates to the given value, and exit with an
+error message and non-zero exit code if not.
+
+An example of how to use this command is:
+```
+[1]: a*a + b*b + c*c;
+
+eval $1 with
+    a = 3;
+    b = 4;
+    c = a;
+end
+```
+which will result in the output
+```
+34
+```
+Instead of the `end`, we could also request that `symachin` exit in case the
+expression does not evaluate to the expected value:
+```
+[1]: a*a + b*b + c*c;
+
+eval $1 with
+    a = 3;
+    b = 4;
+    c = a;
+assert 34;
+```
+which should run without generating any output, and exit with code `0`.
+
 group — Group expression by factor
 -----------------------------------
 Syntax: `[opt. label] group <expression> by [label] <factor>; [label] <factor>; ... [label] other; end`
@@ -277,6 +324,14 @@ Syntax: `print <term> <term> ...;`
 
 Prints the sequence of objects to `stdout` with spaces in between, as well as
 a final newline character.
+
+printf — Print formatted expression
+-----------------------------------
+Syntax: `printf <expr>;`
+
+Similar to `print`, but formats the given expression slightly before printing
+to make easier to read. Primarily, multiple factors occuring in an expression
+are replaced with an exponent.
 
 printn — Print the number of terms in an expression
 -----------------------------------------------------

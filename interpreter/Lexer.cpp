@@ -197,6 +197,8 @@ token *Lexer::next() {
             tkn->type = token::DEFINE;
         } else if (tkn->text == "end") {
             tkn->type = token::END;
+        } else if (tkn->text == "eval") {
+            tkn->type = token::EVAL;
         } else if (tkn->text == "group") {
             tkn->type = token::GROUP;
         } else if (tkn->text == "in") {
@@ -215,6 +217,8 @@ token *Lexer::next() {
             tkn->type = token::REPLACE;
         } else if (tkn->text == "to") {
             tkn->type = token::TO;
+        } else if (tkn->text == "with") {
+            tkn->type = token::WITH;
         } else {
             tkn->type = token::WORD;
         }

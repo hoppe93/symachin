@@ -2,6 +2,7 @@
 #define _PARSER_H
 
 #include <string>
+#include <map>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -28,6 +29,7 @@ class Parser {
         ttype expect(ttype);
         ttype expect_expression(ttype t=token::ENDSTATEMENT);
         token *gtkn() const;
+        bool is_number(const std::string&) const;
         ttype peek() const;
         void require_label() const;
 
@@ -36,6 +38,8 @@ class Parser {
         void assert(symachin::ExpressionPtr&, symachin::ExpressionPtr&);
         void assign(const std::string&, symachin::ExpressionPtr&);
         void define(const std::string&, symachin::ReplacePtr&);
+        void evaluate(symachin::ExpressionPtr&, std::map<std::string, double>&, double);
+        void evaluate_assert(symachin::ExpressionPtr&, double, std::map<std::string, double>&, double);
         //void group_by(symachin::ExpressionPtr&, std::vector<symachin::FactorPtr>&, std::vector<std::string>&, const std::string&);
         void group_by(symachin::ExpressionPtr&, std::vector<symachin::ExpressionPtr>&, std::vector<std::string>&, const std::string&);
         void print();

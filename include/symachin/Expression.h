@@ -29,6 +29,8 @@ namespace symachin {
             void Negate();
             unsigned int NumberOfTerms() const { return terms->size(); }
 
+            double Evaluate(const std::map<std::string, double>&, const double other=1.0) const;
+
             void Add(Factor&);
             void Add(Term&);
             void Add(vectorTermPtr);

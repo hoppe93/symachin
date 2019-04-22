@@ -1,6 +1,7 @@
 #ifndef _SYMACHIN_TERM_H
 #define _SYMACHIN_TERM_H
 
+#include <map>
 #include <memory>
 #include <vector>
 #include "symachin/Factor.h"
@@ -28,6 +29,8 @@ namespace symachin {
             bool HasFactor(const Factor&) const;
             bool HasNumericFactor() const;
             bool IsZero() const;
+
+            double Evaluate(const std::map<std::string, double>&, const double other=1.0) const;
 
             void Multiply(const Factor&);
             void Multiply(const Term&);

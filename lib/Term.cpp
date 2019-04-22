@@ -388,3 +388,27 @@ string Term::ToStringFormatted() const {
     return s;
 }
 
+/**
+ * Evaluate this term numerically with the given
+ * table of numeric substitutions.
+ *
+ * subst: Table of numeric substitutions to make.
+ * other: Value to assign to tokens not found in table 'subst'.
+ */
+double Term::Evaluate(const map<string, double>& subst, const double other) const {
+    double total = 1.0;
+
+    for (vector<FactorPtr>::const_iterator it = factors->begin(); it != factors->end(); it++) {
+        if ((*it)->IsNumber())
+            total *= (*it)->GetNumericValue();
+        else if (subst.find((*it)->GetName()) != subst.end()) {
+            string s = (*it)->GetName();
+            const double val = subst.at(s);
+            total *= val;
+        } else
+            total *= other;
+    }
+
+    return total;
+}
+

@@ -3,6 +3,7 @@
  */
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include "interpreter/Lexer.h"
 #include "interpreter/Parser.h"
@@ -111,6 +112,57 @@ void Parser::Parse(vector<token*> *tokens) {
 
                     require_label();
                     define(currentlabel, rep);
+                } break;
+
+                // EVAL <expr> WITH ... END
+                // EVAL <expr> WITH ... ASSERT <number>
+                case token::EVAL: {
+                    expect_expression(token::WITH);
+                    ExpressionPtr ep(new Expression(gtkn()->text));
+                    map<string, double> subst;
+                    double otherval = 1.0;
+
+                    do {
+                        string sub;
+                        if (expect(token::WORD, token::OTHER) != token::OTHER)
+                            sub = gtkn()->text;
+
+                        expect(token::EQUALS);
+                        expect(token::WORD);
+
+                        string val = gtkn()->text;
+                        double dval;
+                        if (is_number(val))
+                            dval = stod(val);
+                        else if (subst.find(val) != subst.end())
+                            dval = subst[val];
+                        else
+                            Error("Unrecognized value on RHS of expression: '%s'.", val.c_str());
+
+                        if (sub.empty())
+                            otherval = dval;
+                        else
+                            subst[sub] = dval;
+
+                        expect(token::ENDSTATEMENT);
+
+                    } while (peek() != token::END && peek() != token::ASSERT);
+
+                    if (expect(token::ASSERT, token::END) == token::ASSERT) {
+                        expect(token::WORD);
+                        string num = gtkn()->text;
+
+                        if (!is_number(num))
+                            Error("Expected numeric value after 'assert'.");
+
+                        double val = stod(num);
+
+                        expect(token::ENDSTATEMENT);
+
+                        evaluate_assert(ep, val, subst, otherval);
+                    } else
+                        evaluate(ep, subst, otherval);
+
                 } break;
 
                 // GROUP <expr> BY ... END
@@ -298,6 +350,19 @@ token *Parser::gtkn() const {
     else
         Error("Internal error: Attempted to access token without active stream. Perhaps you forgot a final ';' or 'end'?");
     return nullptr;
+}
+
+/**
+ * Returns 'true' if the given string is a valid
+ * C++ floating-point number.
+ *
+ * s: String to check if valid number.
+ */
+bool Parser::is_number(const string& s) const {
+    double d;
+    stringstream sstr(s);
+
+    return !((sstr >> noskipws >> d).rdstate() ^ ios_base::eofbit);
 }
 
 /**

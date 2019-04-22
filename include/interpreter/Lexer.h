@@ -35,6 +35,7 @@ typedef struct lex_token {
         BY,                 // by
         DEFINE,             // define
         END,                // end
+        EVAL,               // eval
         GROUP,              // group
         IN,                 // in
         INCLUDE,            // include
@@ -43,7 +44,8 @@ typedef struct lex_token {
         PRINTF,             // printf
         PRINTN,             // printn
         REPLACE,            // replace
-        TO                  // to
+        TO,                 // to
+        WITH                // with
     };
     tok_type type;
 
@@ -83,6 +85,7 @@ typedef struct lex_token {
             case BY:             return "BY";
             case DEFINE:         return "DEFINE";
             case END:            return "END";
+            case EVAL:           return "EVAL";
             case GROUP:          return "GROUP";
             case IN:             return "IN";
             case INCLUDE:        return "INCLUDE";
@@ -92,6 +95,7 @@ typedef struct lex_token {
             case PRINTN:         return "PRINTN";
             case REPLACE:        return "REPLACE";
             case TO:             return "TO";
+            case WITH:           return "WITH";
 
             case ENDOFSTREAM:    return "ENDOFSTREAM";
             case UNKNOWN:

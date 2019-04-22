@@ -72,6 +72,37 @@ void Parser::define(const string &label, ReplacePtr &rep) {
 }
 
 /**
+ * Evaluate the given expression numerically
+ * with the given substitutions.
+ *
+ * expr:  Expression to evaluate.
+ * subst: Numeric substitutions to make.
+ * other: Value to assign to tokens not in 'subst'.
+ */
+void Parser::evaluate(ExpressionPtr &expr, map<string, double> &subst, double other) {
+    double d = expr->Evaluate(subst, other);
+
+    cout << d << endl;
+}
+
+/**
+ * Evaluate the given expression numerically
+ * with the given substitutions, and assert that
+ * it is equal to the given value.
+ *
+ * expr:  Expression to evaluate.
+ * val:   Value that the expression is expected to evaluate to.
+ * subst: Numeric substitutions to make.
+ * other: Value to assign to tokens not in 'subst'.
+ */
+void Parser::evaluate_assert(ExpressionPtr &expr, double val, map<string, double> &subst, double other) {
+    double d = expr->Evaluate(subst, other);
+
+    if (d != val)
+        Error("Assertion failed. The expression did NOT evaluate to the expected value. Evaluated: %f, expected: %f.", d, val);
+}
+
+/**
  * Group the given expression by the given factor.
  *
  * expr:     Expression to group.
